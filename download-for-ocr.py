@@ -32,7 +32,8 @@ for fileInfo in files:
 
 	# Download and save file
 	data = downloadFile(service, driveFile)
-	_, outputFileDir = mkstemp(dir = outputDir, suffix = ".pdf")
+	# _, outputFileDir = mkstemp(dir = outputDir, suffix = ".pdf")
+        outputFileDir = os.path.join(outputDir, driveFile['title'])
 	outputFile = open(outputFileDir, 'w')
 	outputFile.write(data)
 	outputFile.close()
