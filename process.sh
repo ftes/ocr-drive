@@ -31,7 +31,7 @@ cd $TMP
 cp $IN ./$FILE_NAME
 
 #perform OCR
-pdfsandwich $FILE_NAME -lang $LANG -o $TMP_FILE
+env MAGICK_TMPDIR=/data nice -5 pdfsandwich $FILE_NAME -lang $LANG -o $TMP_FILE -coo "-limit memory 32 -limit map 32"
 
 #upload result and delete input file
 echo "trying to upload"
