@@ -9,6 +9,7 @@
 #Ensure that "upload.py" and "credentials" files are present before attempting
 #automatic run-through triggered through incrontab
 
+echo "Running" >> /home/ocr-drive/log
 
 #basic check of arguments
 ARGS=3
@@ -21,17 +22,18 @@ FILE_NAME=$3
 BASE_DIR=$(dirname $(readlink -f $0))
 
 #generate other needed path and file names
-IN=$IN_DIR/$FILE_NAME
-OUT_NAME=$(date +"%Y-%m-%d %H:%M:%S")
+IN="$IN_DIR/$FILE_NAME"
+OUT_NAME="$FILE_NAME"
+#OUT_NAME=$(date +"%Y-%m-%d %H:%M:%S")
 TMP=$(mktemp -d /tmp/ocr.XXXXXXXX)
 TMP_FILE=$(mktemp $TMP/tmp.pdf.XXXXXXXX)
 
 #copy input file into temp dir
 cd $TMP
-cp $IN ./$FILE_NAME
+cp "$IN" "./$FILE_NAME"
 
 #perform OCR
-env MAGICK_TMPDIR=/data nice -5 pdfsandwich $FILE_NAME -lang $LANG -o $TMP_FILE -coo "-limit memory 32 -limit map 32"
+env MAGICK_TMPDIR=/data nice -5 pdfsandwich "$FILE_NAME" -lang $LANG -o $TMP_FILE -coo "-limit memory 32 -limit map 32"
 
 #upload result and delete input file
 echo "trying to upload"
@@ -42,6 +44,6 @@ then
 	echo "Upload failed"
 	exit 1
 fi
-rm $IN
+rm "$IN"
 
 exit 0
