@@ -7,7 +7,7 @@ import os
 import sys
 
 
-# Path to client_secrets.json which should contain a JSON document such as:
+# Path to client-secrets.json which should contain a JSON document such as:
 #   {
 #     "web": {
 #       "client_id": "[[YOUR_CLIENT_ID]]",
